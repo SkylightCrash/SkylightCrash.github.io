@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14 Jours — Bac Maths Spécialité</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   VARIABLES & RESET
+═══════════════════════════════════════════ */
+:root {
+  --bg:       #f5f2eb;
+  --paper:    #fdfaf4;
+  --ink:      #1c1a16;
+  --ink2:     #4a4540;
+  --ink3:     #8a837a;
+  --rule:     #ddd8ce;
+  --gold:     #c8973a;
+  --gold-bg:  rgba(200,151,58,0.10);
+  --blue:     #2a5fa5;
+  --blue-bg:  rgba(42,95,165,0.08);
+  --green:    #2d7a4f;
+  --green-bg: rgba(45,122,79,0.08);
+  --red:      #b83232;
+  --red-bg:   rgba(184,50,50,0.08);
+  --check:    #2d7a4f;
+  --serif:    'Lora', Georgia, serif;
+  --mono:     'JetBrains Mono', monospace;
+  --sans:     'Inter', system-ui, sans-serif;
+  --shadow:   0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR
+═══════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 270px;
+  background: var(--paper);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-logo {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sidebar-logo .days-badge {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.sidebar-logo h1 {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.sidebar-logo p {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--ink3);
+  margin-top: 0.3rem;
+}
+
+/* progress bar */
+.progress-wrap {
+  padding: 0.8rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.progress-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--ink3);
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.progress-bar {
+  height: 5px;
+  background: var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gold), var(--green));
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* nav items */
+.sidebar-nav {
+  flex: 1;
+  padding: 0.5rem 0;
+}
+
+.nav-section {
+  padding: 0.6rem 1.5rem 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1.5rem;
+  text-decoration: none;
+  color: var(--ink2);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover { background: var(--gold-bg); color: var(--gold); }
+.nav-item.active { background: var(--gold-bg); color: var(--gold); font-weight: 600; }
+
+.nav-check {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  background: white;
+}
+
+.nav-item.done .nav-check {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.nav-item.done .nav-check::after {
+  content: '✓';
+  color: white;
+  font-size: 11px;
+  font-family: var(--sans);
+  font-weight: 700;
+}
+
+.nav-item.done .nav-label { text-decoration: line-through; opacity: 0.6; }
+
+.sidebar-bottom {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.btn-links {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--blue);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+}
+
+.btn-links:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════
+   MOBILE TOGGLE
+═══════════════════════════════════════════ */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 1rem; left: 1rem;
+  z-index: 300;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  box-shadow: var(--shadow);
+}
+
+/* ═══════════════════════════════════════════
+   MAIN CONTENT
+═══════════════════════════════════════════ */
+main {
+  margin-left: 270px;
+  min-height: 100vh;
+  padding: 3rem 3rem 6rem;
+  max-width: 1100px;
+}
+
+/* ═══════════════════════════════════════════
+   HERO HEADER
+═══════════════════════════════════════════ */
+.hero {
+  margin-bottom: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.hero h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+}
+
+.hero h2 em { font-style: italic; color: var(--gold); }
+
+.hero p {
+  font-size: 1rem;
+  color: var(--ink2);
+  max-width: 600px;
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════
+   PLANNING GRID (14 jours)
+═══════════════════════════════════════════ */
+.planning-section {
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.8rem;
+}
+
+.day-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.day-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--gold);
+  transform: scaleY(0);
+  transition: transform 0.2s;
+  transform-origin: bottom;
+}
+
+.day-card:hover { box-shadow: var(--shadow); border-color: var(--gold); }
+.day-card:hover::before { transform: scaleY(1); }
+
+.day-card.done {
+  background: #f0f8f3;
+  border-color: #b8e0c8;
+}
+
+.day-card.done::before {
+  background: var(--green);
+  transform: scaleY(1);
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.day-number {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+.day-card.done .day-number { color: var(--green); }
+
+.day-checkbox {
+  width: 22px; height: 22px;
+  border: 2px solid var(--rule);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: white;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.day-card.done .day-checkbox {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.day-card.done .day-checkbox::after {
+  content: '✓';
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--sans);
+}
+
+.day-exos {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+.day-exos span {
+  display: inline-block;
+  background: var(--rule);
+  padding: 0.05rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  margin-right: 0.2rem;
+  margin-bottom: 0.2rem;
+  color: var(--ink3);
+}
+
+/* ═══════════════════════════════════════════
+   CHAPTERS
+═══════════════════════════════════════════ */
+.chapter {
+  margin-bottom: 5rem;
+  scroll-margin-top: 2rem;
+}
+
+.chapter-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.chapter-title-group {}
+
+.chapter-tag {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.tag-suites { background: rgba(200,151,58,0.15); color: var(--gold); }
+.tag-geom   { background: rgba(42,95,165,0.12);  color: var(--blue); }
+.tag-proba  { background: rgba(45,122,79,0.12);  color: var(--green); }
+.tag-fonc   { background: rgba(184,50,50,0.10);  color: var(--red); }
+.tag-prim   { background: rgba(100,60,150,0.10); color: #6b3d9a; }
+.tag-python { background: rgba(20,120,120,0.10); color: #1a7878; }
+
+.chapter h2 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.chapter-done-btn {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 20px;
+  border: 1.5px solid var(--rule);
+  background: white;
+  cursor: pointer;
+  color: var(--ink2);
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chapter-done-btn:hover { border-color: var(--green); color: var(--green); }
+
+.chapter-done-btn.done {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+/* ─── Course sections ──────────────────── */
+.section { margin-bottom: 2.5rem; }
+
+.section h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--gold);
+}
+
+.section h4 {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin: 1.5rem 0 0.6rem;
+}
+
+p { margin-bottom: 0.9rem; }
+
+.math { font-family: var(--mono); font-size: 0.9em; }
+
+/* ─── Boxes ──────────────────────────── */
+.def-box, .thm-box, .prop-box, .ex-box, .warn-box {
+  border-left: 3px solid;
+  border-radius: 0 4px 4px 0;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+
+.def-box  { border-color: var(--blue);  background: var(--blue-bg); }
+.thm-box  { border-color: var(--gold);  background: var(--gold-bg); }
+.prop-box { border-color: var(--green); background: var(--green-bg); }
+.ex-box   { border-color: var(--ink3);  background: rgba(0,0,0,0.02); }
+.warn-box { border-color: var(--red);   background: var(--red-bg); }
+
+.box-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.def-box  .box-label { color: var(--blue); }
+.thm-box  .box-label { color: var(--gold); }
+.prop-box .box-label { color: var(--green); }
+.ex-box   .box-label { color: var(--ink3); }
+.warn-box .box-label { color: var(--red); }
+
+.formula {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 0.8rem 1.2rem;
+  background: var(--ink);
+  color: #f0e6c8;
+  border-radius: 4px;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.formula-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.f-item {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+
+.f-item .fn { font-size: 0.62rem; color: var(--ink3); font-family: var(--mono); letter-spacing: 0.1em; display: block; margin-bottom: 0.2rem; text-transform: uppercase; }
+.f-item .fv { font-family: var(--mono); font-size: 0.85rem; color: var(--ink); }
+
+/* ─── Tables ─────────────────────────── */
+table { width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.85rem; }
+th { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); padding:0.5rem 0.8rem; border-bottom:2px solid var(--rule); text-align:left; }
+td { padding:0.5rem 0.8rem; border-bottom:1px solid var(--rule); font-family:var(--mono); }
+tr:last-child td { border-bottom:none; }
+tr:hover td { background:var(--gold-bg); }
+
+/* ─── SVG graphs ─────────────────────── */
+.graph { background:var(--paper); border:1px solid var(--rule); border-radius:6px; padding:1rem; margin:1.2rem 0; text-align:center; }
+.graph figcaption { font-family:var(--mono); font-size:0.65rem; color:var(--ink3); margin-top:0.6rem; letter-spacing:0.08em; }
+
+/* ─── Exercices ──────────────────────── */
+.exo-block {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.exo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  user-select: none;
+  gap: 1rem;
+}
+
+.exo-title {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+}
+
+.exo-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.exo-tag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  background: var(--rule);
+  color: var(--ink3);
+  letter-spacing: 0.05em;
+}
+
+.exo-toggle {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink3);
+  flex-shrink: 0;
+}
+
+.exo-body { padding: 1.2rem; display: none; }
+.exo-body.open { display: block; }
+
+.corr-toggle-btn {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  border: 1.5px solid var(--blue);
+  color: var(--blue);
+  background: none;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  transition: all 0.2s;
+}
+
+.corr-toggle-btn:hover { background: var(--blue-bg); }
+
+.correction {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f8f3;
+  border-radius: 4px;
+  border: 1px solid #b8e0c8;
+  display: none;
+}
+
+.correction.open { display: block; }
+
+.correction .corr-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--green);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+ol, ul { padding-left: 1.4rem; margin-bottom: 0.8rem; }
+li { margin-bottom: 0.3rem; }
+
+em-inline { font-family: var(--mono); font-style: normal; font-size: 0.88em; background: rgba(200,151,58,0.15); color: var(--gold); padding: 0.05em 0.35em; border-radius: 3px; }
+
+/* ═══════════════════════════════════════════
+   LINKS SECTION
+═══════════════════════════════════════════ */
+#ressources {
+  margin-bottom: 4rem;
+  scroll-margin-top: 2rem;
+}
+
+.res-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
+
+.res-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.res-card:hover { box-shadow: var(--shadow); border-color: var(--blue); transform: translateY(-1px); }
+
+.res-card .r-type {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.res-card .r-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+
+.res-card .r-desc {
+  font-size: 0.8rem;
+  color: var(--ink3);
+  font-family: var(--sans);
+  line-height: 1.4;
+}
+
+.res-card .r-url {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--rule);
+  margin-top: 0.5rem;
+  display: block;
+  word-break: break-all;
+}
+
+/* User links */
+.user-res-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.user-res-card .del-btn {
+  background: none;
+  border: none;
+  color: var(--ink3);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.2rem;
+  transition: color 0.2s;
+}
+
+.user-res-card .del-btn:hover { color: var(--red); }
+
+/* Add link form */
+.add-link-panel {
+  background: var(--paper);
+  border: 1px dashed var(--rule);
+  border-radius: 6px;
+  padding: 1.2rem;
+  margin-top: 1rem;
+}
+
+.add-link-panel h4 {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink2);
+  margin-bottom: 0.8rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.form-row.single { grid-template-columns: 1fr; }
+
+.form-input {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: white;
+  color: var(--ink);
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus { outline: none; border-color: var(--blue); }
+.form-input::placeholder { color: var(--ink3); }
+
+.btn-add {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  padding: 0.55rem 1.2rem;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-add:hover { opacity: 0.85; }
+
+/* ═══════════════════════════════════════════
+   MODAL (planning detail)
+═══════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--paper);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+  padding: 1.5rem;
+  transform: translateY(10px);
+  transition: transform 0.2s;
+}
+
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-close {
+  float: right;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--ink3);
+  line-height: 1;
+}
+
+.modal h3 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.4rem; }
+.modal .modal-exos { font-family: var(--sans); font-size: 0.85rem; color: var(--ink2); margin-bottom: 1.2rem; line-height: 1.7; }
+
+.modal-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+
+.btn-mark-done {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-mark-done.mark { background: var(--green); color: white; border: none; }
+.btn-mark-done.mark:hover { opacity: 0.85; }
+.btn-mark-done.unmark { background: none; color: var(--red); border: 1.5px solid var(--red); }
+.btn-mark-done.unmark:hover { background: var(--red-bg); }
+.btn-cancel { background: none; border: 1.5px solid var(--rule); color: var(--ink2); }
+.btn-cancel:hover { border-color: var(--ink3); }
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--ink);
+  color: white;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  z-index: 1000;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.mobile-open { transform: translateX(0); box-shadow: var(--shadow-lg); }
+  main { margin-left: 0; padding: 1.5rem 1.2rem 4rem; }
+  .sidebar-toggle { display: block; }
+  .hero { padding-top: 3rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ─── animations ─────────────────────── */
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+.chapter { animation: fadeIn 0.4s ease; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="days-badge">Programme · 14 jours</span>
+    <h1>Bac Maths<br>Spécialité</h1>
+    <p>Terminale — Cours & Exercices</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>PROGRESSION</span>
+      <span id="progressText">0 / 4 chapitres</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section">Planning</div>
+    <a class="nav-item" href="#planning" onclick="goTo('planning')>
+      <span style="font-size:0.9rem">📅</span>
+      <span class="nav-label">14 jours de révision</span>
+    </a>
+
+    <div class="nav-section">Cours</div>
+
+    <button class="nav-item" id="nav-ch1" onclick="goTo('ch1')">
+      <div class="nav-check" id="check-ch1"></div>
+      <span class="nav-label">1 — Suites numériques</span>
+    </button>
+    <button class="nav-item" id="nav-ch2" onclick="goTo('ch2')">
+      <div class="nav-check" id="check-ch2"></div>
+      <span class="nav-label">2 — Géométrie 3D</span>
+    </button>
+    <button class="nav-item" id="nav-ch3" onclick="goTo('ch3')">
+      <div class="nav-check" id="check-ch3"></div>
+      <span class="nav-label">3 — Probabilités</span>
+    </button>
+    <button class="nav-item" id="nav-ch4" onclick="goTo('ch4')">
+      <div class="nav-check" id="check-ch4"></div>
+      <span class="nav-label">4 — Fonctions</span>
+    </button>
+    <button class="nav-item" id="nav-ch5" onclick="goTo('ch5')">
+      <div class="nav-check" id="check-ch5"></div>
+      <span class="nav-label">5 — Primitives</span>
+    </button>
+
+    <div class="nav-section">Autres</div>
+    <a class="nav-item" href="#ressources" onclick="closeMobileMenu()">
+      <span style="font-size:0.9rem">🔗</span>
+      <span class="nav-label">Liens & Ressources</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <button class="btn-links" onclick="scrollToLinks()">+ Ajouter un lien perso</button>
+  </div>
+</aside>
+
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleMenu()">☰</button>
+
+<!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-eyebrow">Spécialité Mathématiques · Terminale</span>
+  <h2>14 jours pour réussir<br><em>le bac de maths</em></h2>
+  <p>Cours complets, exercices type bac avec corrections, planning jour par jour — tout pour être prêt.</p>
+</div>
+
+<!-- ══════════════════════════════════
+     PLANNING 14 JOURS
+══════════════════════════════════ -->
+<section class="planning-section" id="planning">
+  <div class="section-title">Planning de révision — 14 jours</div>
+  <div class="days-grid" id="daysGrid"></div>
+</section>
+
+<div style="height:1px;background:var(--rule);margin-bottom:3.5rem;"></div>
+
+<!-- ══════════════════════════════════
+     CHAPITRE 1 — SUITES
+══════════════════════════════════ -->
+<section class="chapter" id="ch1">
+  <div class="chapter-header">
+    <div class="chapter-title-group">
+      <span class="chapter-tag tag-suites">Chapitre 1</span>
+      <h2>Suites numériques</h2>
+    </div>
+    <button class="chapter-done-btn" id="btn-ch1" onclick="toggleChapter('ch1')">
+      <span class="btn-icon">○</span> Marquer fait
+    </button>
+  </div>
+
+  <!-- 1.1 Suite géométrique -->
+  <div class="section">
+    <h3>1.1 Suite géométrique</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      Si <code>(u<sub>n</sub>)</code> est une suite géométrique de raison <code>q ≠ 1</code> et de premier terme <code>u₀</code>, alors :
+    </div>
+    <div class="formula">u<sub>n</sub> = u₀ · qⁿ &nbsp;&nbsp;&nbsp; et &nbsp;&nbsp;&nbsp; S<sub>n</sub> = u₀ + u₁ + … + u<sub>n</sub> = u₀ · (1 − qⁿ⁺¹) / (1 − q)</div>
+    <p>Si le premier terme est <code>u<sub>n₀</sub></code> avec <code>n₀ ∈ ℕ</code> alors : <code>u<sub>n</sub> = u<sub>n₀</sub> · q<sup>n−n₀</sup></code> et la somme du rang <code>n₀</code> au rang <code>n</code> vaut <code>u<sub>n₀</sub> · (1 − q<sup>n−n₀+1</sup>) / (1 − q)</code>.</p>
+  </div>
+
+  <!-- 1.2 Limites de référence -->
+  <div class="section">
+    <h3>1.2 Les limites de référence</h3>
+    <div class="formula-grid">
+      <div class="f-item"><span class="fn">Polynôme → +∞</span><span class="fv">lim nᵖ = +∞</span></div>
+      <div class="f-item"><span class="fn">Décroissance → 0</span><span class="fv">lim 1/nᵖ = 0</span></div>
+      <div class="f-item"><span class="fn">q > 1</span><span class="fv">lim qⁿ = +∞</span></div>
+      <div class="f-item"><span class="fn">−1 &lt; q &lt; 1</span><span class="fv">lim qⁿ = 0</span></div>
+      <div class="f-item"><span class="fn">q ≤ −1</span><span class="fv">pas de limite</span></div>
+      <div class="f-item"><span class="fn">√n → +∞</span><span class="fv">lim √n = +∞</span></div>
+    </div>
+  </div>
+
+  <!-- 1.3 Inégalités et limites -->
+  <div class="section">
+    <h3>1.3 Inégalités et limites de suites</h3>
+    <div class="thm-box">
+      <span class="box-label">Théorème de comparaison</span>
+      Si à partir d'un certain rang <code>u<sub>n</sub> ≤ v<sub>n</sub></code> alors :<br>
+      • Si <code>lim u<sub>n</sub> = +∞</code> alors <code>lim v<sub>n</sub> = +∞</code><br>
+      • Si <code>lim v<sub>n</sub> = −∞</code> alors <code>lim u<sub>n</sub> = −∞</code>
+    </div>
+    <div class="thm-box">
+      <span class="box-label">Théorème des gendarmes</span>
+      Si <code>lim u<sub>n</sub> = lim v<sub>n</sub> = ℓ ∈ ℝ</code> et que, à partir d'un certain rang, <code>u<sub>n</sub> ≤ w<sub>n</sub> ≤ v<sub>n</sub></code>, alors <code>lim w<sub>n</sub> = ℓ</code>.
+    </div>
+  </div>
+
+  <!-- 1.4 Bornée -->
+  <div class="section">
+    <h3>1.4 Suite minorée, majorée, bornée</h3>
+    <div class="def-box">
+      <span class="box-label">Définitions</span>
+      Une suite <code>(u<sub>n</sub>)</code> est :<br>
+      • <strong>minorée</strong> s'il existe <code>m</code> tel que pour tout <code>n</code>, <code>u<sub>n</sub> ≥ m</code><br>
+      • <strong>majorée</strong> s'il existe <code>M</code> tel que pour tout <code>n</code>, <code>u<sub>n</sub> ≤ M</code><br>
+      • <strong>bornée</strong> si elle est à la fois minorée et majorée<br>
+      • <strong>croissante</strong> si <code>u<sub>n+1</sub> − u<sub>n</sub> ≥ 0</code> pour tout <code>n</code><br>
+      • <strong>décroissante</strong> si <code>u<sub>n+1</sub> − u<sub>n</sub> ≤ 0</code> pour tout <code>n</code>
+    </div>
+    <div class="thm-box">
+      <span class="box-label">Théorème de convergence monotone</span>
+      1. Toute suite <strong>croissante et majorée</strong> converge.<br>
+      2. Toute suite <strong>décroissante et minorée</strong> converge.<br>
+      <em>Remarque : ce théorème ne donne pas la valeur de la limite.</em>
+    </div>
+  </div>
+
+  <!-- 1.5 Suite définie par récurrence -->
+  <div class="section">
+    <h3>1.5 Suite définie par récurrence</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      Une suite définie par <code>u₀ = a</code> et <code>u<sub>n+1</sub> = f(u<sub>n</sub>)</code> est une suite récurrente.
+    </div>
+    <div class="thm-box">
+      <span class="box-label">Convergence d'une suite récurrente</span>
+      Si <code>(u<sub>n</sub>)</code> converge vers <code>ℓ</code>, alors <code>ℓ</code> est solution de <code>ℓ = f(ℓ)</code> (point fixe).<br>
+      <strong>Méthode :</strong> 1) Montrer la convergence (monotonie + bornée), 2) passer à la limite dans la relation de récurrence.
+    </div>
+    <div class="warn-box">
+      <span class="box-label">⚠ Attention</span>
+      L'équation <code>ℓ = f(ℓ)</code> peut avoir plusieurs solutions — seule la limite réelle est valide. Il faut d'abord prouver que la suite converge !
+    </div>
+  </div>
+
+  <!-- 1.6 Récurrence -->
+  <div class="section">
+    <h3>1.6 Raisonnement par récurrence</h3>
+    <div class="prop-box">
+      <span class="box-label">Structure de la preuve par récurrence</span>
+      <strong>1. Initialisation :</strong> On vérifie que <code>P<sub>n₀</sub></code> est vraie.<br>
+      <strong>2. Hérédité :</strong> On suppose <code>P<sub>n</sub></code> vraie pour un entier <code>n ≥ n₀</code> (hypothèse de récurrence) et on montre <code>P<sub>n+1</sub></code>.<br>
+      <strong>3. Conclusion :</strong> Pour tout entier <code>n ≥ n₀</code>, <code>P<sub>n</sub></code> est vraie.
+    </div>
+  </div>
+
+  <!-- Exercice 1.3 -->
+  <div class="section">
+    <h3>Exercices type bac</h3>
+
+
+
+    <div class="exo-block">
+      <div class="exo-header" onclick="toggleExo('exo11')">
+        <div>
+          <div class="exo-title">Exercice 1.1 — Deux suites couplées et raisonnement par récurrence</div>
+          <div class="exo-tags">
+            <span class="exo-tag">récurrente</span>
+            <span class="exo-tag">comparaison</span>
+            <span class="exo-tag">limite</span>
+          </div>
+        </div>
+        <span class="exo-toggle" id="toggle-exo11">▼ Voir</span>
+      </div>
+      <div class="exo-body" id="body-exo11">
+        <p>On considère les suites <code>(u<sub>n</sub>)</code> et <code>(v<sub>n</sub>)</code> définies par <code>u₀ = v₀ = 1</code> et pour tout <code>n</code> :</p>
+        <div class="formula">u<sub>n+1</sub> = u<sub>n</sub> + v<sub>n</sub> &nbsp;&nbsp;&nbsp; v<sub>n+1</sub> = 2u<sub>n</sub> + v<sub>n</sub></div>
+        <p>On admet que les deux suites sont strictement positives.</p>
+        <ol>
+          <li>Calculer <code>u₁</code> et <code>v₁</code>.</li>
+          <li>Montrer que <code>(v<sub>n</sub>)</code> est strictement croissante, puis que pour tout <code>n</code>, <code>v<sub>n</sub> ≥ 1</code>.</li>
+          <li>Démontrer par récurrence que pour tout <code>n</code>, <code>u<sub>n</sub> ≥ n + 1</code>.</li>
+          <li>En déduire la limite de la suite <code>(u<sub>n</sub>)</code>.</li>
+        </ol>
+        <button class="corr-toggle-btn" onclick="toggleCorr('corr11')">Voir la correction</button>
+        <div class="correction" id="corr11">
+          <span class="corr-label">Correction</span>
+          <ol>
+            <li><code>u₁ = 1 + 1 = 2</code> ; <code>v₁ = 2×1 + 1 = 3</code>.</li>
+            <li><code>v<sub>n+1</sub> − v<sub>n</sub> = 2u<sub>n</sub> > 0</code> car <code>u<sub>n</sub> > 0</code> → croissante. Donc <code>v<sub>n</sub> ≥ v₀ = 1</code>.</li>
+            <li>Init. : <code>u₀ = 1 ≥ 0+1</code> ✓. Hérédité : si <code>u<sub>n</sub> ≥ n+1</code>, alors <code>u<sub>n+1</sub> = u<sub>n</sub> + v<sub>n</sub> ≥ (n+1) + 1 = n+2</code> ✓.</li>
+            <li>Comme <code>u<sub>n</sub> ≥ n+1</code> et <code>lim(n+1) = +∞</code>, par comparaison <code>lim u<sub>n</sub> = +∞</code>.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+	    <div class="exo-block">
+      <div class="exo-header" onclick="toggleExo('exo13')">
+        <div>
+          <div class="exo-title">Exercice 1.2 — Suite récurrente et suite géométrique auxiliaire</div>
+          <div class="exo-tags">
+            <span class="exo-tag">récurrence</span>
+            <span class="exo-tag">suite géométrique</span>
+            <span class="exo-tag">convergence</span>
+          </div>
+        </div>
+        <span class="exo-toggle" id="toggle-exo13">▼ Voir</span>
+      </div>
+      <div class="exo-body" id="body-exo13">
+        <p>On considère la suite <code>(u<sub>n</sub>)</code> définie par <code>u₀ = 12 000</code> et pour tout entier naturel <code>n</code> :</p>
+        <div class="formula">u<sub>n+1</sub> = 0,85 · u<sub>n</sub> + 300</div>
+        <ol>
+          <li>Calculer <code>u₁</code> et vérifier que <code>u₂ = 9 225</code>.</li>
+          <li>Démontrer par récurrence que pour tout <code>n ∈ ℕ</code>, <code>u<sub>n</sub> > 2 000</code>. En déduire que la suite est décroissante et converge.</li>
+          <li>Poser <code>v<sub>n</sub> = u<sub>n</sub> − 2 000</code>. Montrer que <code>(v<sub>n</sub>)</code> est géométrique, puis exprimer <code>u<sub>n</sub></code> en fonction de <code>n</code>.</li>
+          <li><em>Contexte :</em> En 2020, une espèce animale comptait 12 000 individus. Chaque année la population baisse de 15 % et 300 individus sont réintroduits. Une responsable affirme que la population ne disparaîtra pas mais perdra plus des trois quarts. Justifier.</li>
+        </ol>
+
+        <button class="corr-toggle-btn" onclick="toggleCorr('corr13')">Voir la correction</button>
+        <div class="correction" id="corr13">
+          <span class="corr-label">Correction</span>
+          <ol>
+            <li><code>u₁ = 0,85 × 12 000 + 300 = 10 500</code> ; <code>u₂ = 0,85 × 10 500 + 300 = 9 225</code> ✓</li>
+            <li><strong>Récurrence sur P<sub>n</sub> : u<sub>n</sub> > 2 000.</strong><br>
+              Init. : <code>u₀ = 12 000 > 2 000</code> ✓<br>
+              Hérédité : Si <code>u<sub>n</sub> > 2 000</code> alors <code>0,85u<sub>n</sub> > 1 700</code>, soit <code>u<sub>n+1</sub> = 0,85u<sub>n</sub> + 300 > 2 000</code> ✓<br>
+              Décroissance : <code>u<sub>n+1</sub> − u<sub>n</sub> = −0,15u<sub>n</sub> + 300</code>. Comme <code>u<sub>n</sub> > 2 000</code>, on a <code>−0,15u<sub>n</sub> < −300</code>, donc <code>u<sub>n+1</sub> − u<sub>n</sub> < 0</code>. Suite décroissante et minorée → converge.</li>
+            <li><code>v₀ = 10 000</code>. On montre <code>v<sub>n+1</sub> = 0,85v<sub>n</sub></code> → suite géométrique de raison 0,85.<br>
+              Donc <code>v<sub>n</sub> = 10 000 × 0,85<sup>n</sup></code> et <code>u<sub>n</sub> = 2 000 + 10 000 × 0,85<sup>n</sup></code>.</li>
+            <li>Comme <code>0 < 0,85 < 1</code>, <code>lim u<sub>n</sub> = 2 000</code>. La population tend vers 2 000, soit moins d'un sixième de 12 000. La responsable a raison : pas d'extinction, mais une perte de plus des 3/4.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+	    <div class="exo-block">
+      <div class="exo-header" onclick="toggleExo('exo13')">
+        <div>
+          <div class="exo-title">Exercice 1.3 — Suite récurrente et suite géométrique auxiliaire</div>
+          <div class="exo-tags">
+            <span class="exo-tag">récurrence</span>
+            <span class="exo-tag">suite géométrique</span>
+            <span class="exo-tag">convergence</span>
+          </div>
+        </div>
+        <span class="exo-toggle" id="toggle-exo13">▼ Voir</span>
+      </div>
+      <div class="exo-body" id="body-exo13">
+        <p>On considère la suite <code>(u<sub>n</sub>)</code> définie par <code>u₀ = 12 000</code> et pour tout entier naturel <code>n</code> :</p>
+        <div class="formula">u<sub>n+1</sub> = 0,85 · u<sub>n</sub> + 300</div>
+        <ol>
+          <li>Calculer <code>u₁</code> et vérifier que <code>u₂ = 9 225</code>.</li>
+          <li>Démontrer par récurrence que pour tout <code>n ∈ ℕ</code>, <code>u<sub>n</sub> > 2 000</code>. En déduire que la suite est décroissante et converge.</li>
+          <li>Poser <code>v<sub>n</sub> = u<sub>n</sub> − 2 000</code>. Montrer que <code>(v<sub>n</sub>)</code> est géométrique, puis exprimer <code>u<sub>n</sub></code> en fonction de <code>n</code>.</li>
+          <li><em>Contexte :</em> En 2020, une espèce animale comptait 12 000 individus. Chaque année la population baisse de 15 % et 300 individus sont réintroduits. Une responsable affirme que la population ne disparaîtra pas mais perdra plus des trois quarts. Justifier.</li>
+        </ol>
+
+        <button class="corr-toggle-btn" onclick="toggleCorr('corr13')">Voir la correction</button>
+        <div class="correction" id="corr13">
+          <span class="corr-label">Correction</span>
+          <ol>
+            <li><code>u₁ = 0,85 × 12 000 + 300 = 10 500</code> ; <code>u₂ = 0,85 × 10 500 + 300 = 9 225</code> ✓</li>
+            <li><strong>Récurrence sur P<sub>n</sub> : u<sub>n</sub> > 2 000.</strong><br>
+              Init. : <code>u₀ = 12 000 > 2 000</code> ✓<br>
+              Hérédité : Si <code>u<sub>n</sub> > 2 000</code> alors <code>0,85u<sub>n</sub> > 1 700</code>, soit <code>u<sub>n+1</sub> = 0,85u<sub>n</sub> + 300 > 2 000</code> ✓<br>
+              Décroissance : <code>u<sub>n+1</sub> − u<sub>n</sub> = −0,15u<sub>n</sub> + 300</code>. Comme <code>u<sub>n</sub> > 2 000</code>, on a <code>−0,15u<sub>n</sub> < −300</code>, donc <code>u<sub>n+1</sub> − u<sub>n</sub> < 0</code>. Suite décroissante et minorée → converge.</li>
+            <li><code>v₀ = 10 000</code>. On montre <code>v<sub>n+1</sub> = 0,85v<sub>n</sub></code> → suite géométrique de raison 0,85.<br>
+              Donc <code>v<sub>n</sub> = 10 000 × 0,85<sup>n</sup></code> et <code>u<sub>n</sub> = 2 000 + 10 000 × 0,85<sup>n</sup></code>.</li>
+            <li>Comme <code>0 < 0,85 < 1</code>, <code>lim u<sub>n</sub> = 2 000</code>. La population tend vers 2 000, soit moins d'un sixième de 12 000. La responsable a raison : pas d'extinction, mais une perte de plus des 3/4.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CHAPITRE 2 — GÉOMÉTRIE 3D
+══════════════════════════════════ -->
+<section class="chapter" id="ch2">
+  <div class="chapter-header">
+    <div class="chapter-title-group">
+      <span class="chapter-tag tag-geom">Chapitre 2</span>
+      <h2>Vecteurs, droites et plans de l'espace</h2>
+    </div>
+    <button class="chapter-done-btn" id="btn-ch2" onclick="toggleChapter('ch2')">
+      <span class="btn-icon">○</span> Marquer fait
+    </button>
+  </div>
+
+  <div class="section">
+    <h3>2.1 Produit scalaire dans l'espace</h3>
+    <div class="def-box">
+      <span class="box-label">Repère orthonormal</span>
+      Dans un repère <code>(O; ī, j̄, k̄)</code> orthonormal, si <code>u⃗(x,y,z)</code> et <code>v⃗(x',y',z')</code> :
+    </div>
+    <div class="formula-grid">
+      <div class="f-item"><span class="fn">Produit scalaire</span><span class="fv">u⃗·v⃗ = xx'+yy'+zz'</span></div>
+      <div class="f-item"><span class="fn">Norme</span><span class="fv">‖u⃗‖ = √(x²+y²+z²)</span></div>
+      <div class="f-item"><span class="fn">Orthogonalité</span><span class="fv">u⃗·v⃗ = 0</span></div>
+      <div class="f-item"><span class="fn">Angle</span><span class="fv">u⃗·v⃗ = ‖u⃗‖‖v⃗‖cosθ</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>2.2 Représentation paramétrique d'une droite</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      La droite passant par <code>A(x₀, y₀, z₀)</code> de vecteur directeur <code>u⃗(a, b, c)</code> a pour représentation paramétrique :
+    </div>
+    <div class="formula">x = x₀ + ta &nbsp; ; &nbsp; y = y₀ + tb &nbsp; ; &nbsp; z = z₀ + tc &nbsp;&nbsp; (t ∈ ℝ)</div>
+    <p>Deux droites sont parallèles si leurs vecteurs directeurs sont colinéaires. Elles peuvent être <strong>coplanaires</strong> (sécantes ou parallèles) ou <strong>gauches</strong> (non coplanaires).</p>
+  </div>
+
+  <div class="section">
+    <h3>2.3 Équation cartésienne d'un plan</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      Tout plan admet une équation de la forme <code>ax + by + cz + d = 0</code> où <code>n⃗(a, b, c)</code> est un vecteur <strong>normal</strong> au plan.
+    </div>
+    <div class="thm-box">
+      <span class="box-label">Méthode — Trouver un vecteur normal</span>
+      Pour montrer que <code>n⃗</code> est normal au plan (ABC), on vérifie que <code>n⃗ · AB⃗ = 0</code> et <code>n⃗ · AC⃗ = 0</code>.<br>
+      Ensuite : tout point <code>M(x,y,z) ∈ (ABC) ⟺ AM⃗ · n⃗ = 0</code>.
+    </div>
+    <div class="prop-box">
+      <span class="box-label">Distance d'un point à un plan</span>
+      La distance du point <code>M(x₀, y₀, z₀)</code> au plan <code>ax + by + cz + d = 0</code> est :
+      <div class="formula">d = |ax₀ + by₀ + cz₀ + d| / √(a² + b² + c²)</div>
+    </div>
+    <div class="prop-box">
+      <span class="box-label">Projeté orthogonal d'un point sur un plan</span>
+      1. Écrire la droite <code>(d)</code> passant par le point, de vecteur directeur <code>n⃗</code> (normal au plan).<br>
+      2. Substituer la représentation paramétrique dans l'équation du plan.<br>
+      3. Trouver <code>t</code>, puis les coordonnées du projeté <code>H</code>.
+    </div>
+
+    <!-- SVG plan dans l'espace -->
+    <div class="graph">
+      <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+        <defs><marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#4a4540"/></marker></defs>
+        <!-- plan -->
+        <polygon points="60,170 280,170 400,90 180,90" fill="rgba(42,95,165,0.07)" stroke="#2a5fa5" stroke-width="1.5"/>
+        <!-- vecteur normal -->
+        <line x1="230" y1="130" x2="230" y2="40" stroke="#c8973a" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="238" y="40" fill="#c8973a" font-family="JetBrains Mono,monospace" font-size="13">n⃗(a,b,c)</text>
+        <!-- point A dans le plan -->
+        <circle cx="230" cy="130" r="4" fill="#c8973a"/>
+        <text x="238" y="135" fill="#4a4540" font-family="JetBrains Mono,monospace" font-size="11">A</text>
+        <!-- vecteurs dans le plan -->
+        <line x1="230" y1="130" x2="320" y2="120" stroke="#2a5fa5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+        <line x1="230" y1="130" x2="190" y2="110" stroke="#2a5fa5" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+        <!-- label plan -->
+        <text x="68" y="165" fill="#2a5fa5" font-family="JetBrains Mono,monospace" font-size="12">(P) : ax + by + cz + d = 0</text>
+      </svg>
+      <figcaption>Plan (P) et son vecteur normal n⃗</figcaption>
+    </div>
+  </div>
+
+  <!-- Exercice 2.2 -->
+  <div class="section">
+    <h3>Exercice type bac</h3>
+    <div class="exo-block">
+      <div class="exo-header" onclick="toggleExo('exo22')">
+        <div>
+          <div class="exo-title">Exercice 2.2 — Plan, droite et projeté orthogonal</div>
+          <div class="exo-tags"><span class="exo-tag">équation plan</span><span class="exo-tag">droite paramétrique</span></div>
+        </div>
+        <span class="exo-toggle" id="toggle-exo22">▼ Voir</span>
+      </div>
+      <div class="exo-body" id="body-exo22">
+        <p>On se place dans le plan du repère orthonormé. Soit le plan <code>P : x + 3y − 2z + 2 = 0</code> et les droites :</p>
+        <div class="formula">d₁ : x=3+t, y=8−2t, z=−2+3t &nbsp;&nbsp; d₂ : x=4+t, y=1+t, z=8+2t</div>
+        <ol>
+          <li>Les droites <code>d₁</code> et <code>d₂</code> sont-elles parallèles ?</li>
+          <li>Montrer que la droite <code>d₂</code> est parallèle au plan <code>P</code>.</li>
+          <li>Montrer que <code>L(4; 0; 3)</code> est le projeté orthogonal de <code>M(5; 3; 1)</code> sur <code>P</code>.</li>
+        </ol>
+        <button class="corr-toggle-btn" onclick="toggleCorr('corr22')">Voir la correction</button>
+        <div class="correction" id="corr22">
+          <span class="corr-label">Correction</span>
+          <ol>
+            <li>Vecteurs directeurs : <code>u⃗(1;−2;3)</code> et <code>v⃗(1;1;2)</code>. Ils ne sont pas colinéaires → droites <strong>non parallèles</strong>.</li>
+            <li>Vecteur normal <code>n⃗(1;3;−2)</code>. <code>n⃗·v⃗ = 1+3−4 = 0</code> → <code>d₂ ∥ P</code>.</li>
+            <li><code>ML⃗(−1;−3;2) = −n⃗</code> → <code>ML⃗</code> est colinéaire à <code>n⃗</code> → <code>ML ⊥ P</code>.<br>
+            <code>L</code> vérifie l'équation de <code>P</code> : <code>4+0−6+2 = 0</code> ✓ → <code>L</code> est le projeté de <code>M</code>.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CHAPITRE 3 — PROBABILITÉS
+══════════════════════════════════ -->
+<section class="chapter" id="ch3">
+  <div class="chapter-header">
+    <div class="chapter-title-group">
+      <span class="chapter-tag tag-proba">Chapitre 3</span>
+      <h2>Probabilités</h2>
+    </div>
+    <button class="chapter-done-btn" id="btn-ch3" onclick="toggleChapter('ch3')">
+      <span class="btn-icon">○</span> Marquer fait
+    </button>
+  </div>
+
+  <div class="section">
+    <h3>3.1 Probabilités conditionnelles</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      La probabilité conditionnelle de <code>B</code> sachant <code>A</code> (avec <code>P(A) ≠ 0</code>) :
+    </div>
+    <div class="formula">P<sub>A</sub>(B) = P(A ∩ B) / P(A)</div>
+  </div>
+
+  <div class="section">
+    <h3>3.2 Arbre pondéré</h3>
+    <div class="prop-box">
+      <span class="box-label">Règles d'utilisation</span>
+      <strong>Règle 1 :</strong> La somme des probabilités issues d'un même nœud vaut 1.<br>
+      <strong>Règle 2 (multiplicative) :</strong> La probabilité d'un chemin = produit des branches.<br>
+      <code>P(A ∩ B) = P(A) × P<sub>A</sub>(B)</code><br>
+      <strong>Règle 3 :</strong> La probabilité d'un événement = somme des chemins qui y aboutissent.<br>
+      <code>P(B) = P(A)·P<sub>A</sub>(B) + P(Ā)·P<sub>Ā</sub>(B)</code>
+    </div>
+
+    <!-- SVG arbre proba -->
+    <div class="graph">
+      <svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="auto">
+        <circle cx="60" cy="100" r="8" fill="#c8973a"/>
+        <!-- A -->
+        <line x1="68" y1="90" x2="185" y2="50" stroke="#4a4540" stroke-width="1.2"/>
+        <circle cx="196" cy="46" r="7" fill="#2a5fa5"/>
+        <text x="206" y="51" font-family="JetBrains Mono,monospace" font-size="13" fill="#2a5fa5">A</text>
+        <text x="110" y="58" font-family="JetBrains Mono,monospace" font-size="10" fill="#8a837a">P(A)</text>
+        <!-- Ā -->
+        <line x1="68" y1="110" x2="185" y2="150" stroke="#4a4540" stroke-width="1.2"/>
+        <circle cx="196" cy="154" r="7" fill="#2d7a4f"/>
+        <text x="206" y="159" font-family="JetBrains Mono,monospace" font-size="13" fill="#2d7a4f">Ā</text>
+        <text x="110" y="148" font-family="JetBrains Mono,monospace" font-size="10" fill="#8a837a">P(Ā)</text>
+        <!-- B|A -->
+        <line x1="203" y1="40" x2="330" y2="22" stroke="#4a4540" stroke-width="1"/>
+        <text x="338" y="27" font-family="JetBrains Mono,monospace" font-size="11" fill="#1c1a16">A∩B</text>
+        <text x="252" y="22" font-family="JetBrains Mono,monospace" font-size="10" fill="#8a837a">P_A(B)</text>
+        <!-- B̄|A -->
+        <line x1="203" y1="52" x2="330" y2="70" stroke="#4a4540" stroke-width="1"/>
+        <text x="338" y="75" font-family="JetBrains Mono,monospace" font-size="11" fill="#1c1a16">A∩B̄</text>
+        <!-- B|Ā -->
+        <line x1="203" y1="148" x2="330" y2="130" stroke="#4a4540" stroke-width="1"/>
+        <text x="338" y="135" font-family="JetBrains Mono,monospace" font-size="11" fill="#1c1a16">Ā∩B</text>
+        <text x="252" y="128" font-family="JetBrains Mono,monospace" font-size="10" fill="#8a837a">P_Ā(B)</text>
+        <!-- B̄|Ā -->
+        <line x1="203" y1="160" x2="330" y2="178" stroke="#4a4540" stroke-width="1"/>
+        <text x="338" y="183" font-family="JetBrains Mono,monospace" font-size="11" fill="#1c1a16">Ā∩B̄</text>
+      </svg>
+      <figcaption>Arbre pondéré avec système complet {A, Ā}</figcaption>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>3.3 Indépendance et formule de Bayes</h3>
+    <div class="def-box">
+      <span class="box-label">Indépendance</span>
+      Deux événements <code>A</code> et <code>B</code> sont indépendants si <code>P(A ∩ B) = P(A) × P(B)</code>.<br>
+      ⚠ Ne pas confondre <strong>indépendance</strong> et <strong>incompatibilité</strong> !
+    </div>
+    <div class="thm-box">
+      <span class="box-label">Formule de Bayes</span>
+      Si <code>{B₁, …, Bₙ}</code> est un système complet d'événements :<br>
+      <strong>Probabilités totales :</strong> <code>P(A) = Σ P(B<sub>k</sub>) × P<sub>Bk</sub>(A)</code><br>
+      <strong>Bayes :</strong>
+      <div class="formula">P(B<sub>k</sub> | A) = P(B<sub>k</sub>) × P<sub>Bk</sub>(A) / P(A)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>3.4 Loi binomiale</h3>
+    <div class="def-box">
+      <span class="box-label">Schéma de Bernoulli — Loi B(n, p)</span>
+      On répète <code>n</code> épreuves de Bernoulli indépendantes de probabilité de succès <code>p</code>. Le nombre de succès <code>X</code> suit <code>B(n, p)</code>.
+    </div>
+    <div class="formula">P(X = k) = C(n,k) · pᵏ · (1−p)ⁿ⁻ᵏ &nbsp;&nbsp; avec &nbsp;&nbsp; C(n,k) = n! / (k!(n−k)!)</div>
+    <div class="formula-grid">
+      <div class="f-item"><span class="fn">Espérance</span><span class="fv">E(X) = np</span></div>
+      <div class="f-item"><span class="fn">Variance</span><span class="fv">V(X) = np(1−p)</span></div>
+      <div class="f-item"><span class="fn">Écart-type</span><span class="fv">σ = √(np(1−p))</span></div>
+      <div class="f-item"><span class="fn">Symétrie</span><span class="fv">C(n,k) = C(n,n−k)</span></div>
+    </div>
+  </div>
+
+  <!-- Exo 3.1 -->
+  <div class="section">
+    <h3>Exercice type bac</h3>
+    <div class="exo-block">
+      <div class="exo-header" onclick="toggleExo('exo31')">
+        <div>
+          <div class="exo-title">Exercice 3.1 — École de statistique : arbre, probabilités totales, loi binomiale</div>
+          <div class="exo-tags"><span class="exo-tag">arbre</span><span class="exo-tag">Bayes</span><span class="exo-tag">binomiale</span></div>
+        </div>
+        <span class="exo-toggle" id="toggle-exo31">▼ Voir</span>
+      </div>
+      <div class="exo-body" id="body-exo31">
+        <p><strong>Partie 1.</strong> 10 % des candidats sont sélectionnés sur dossier. Parmi eux, 60 % sont admis après oral. Les autres passent à l'écrit : 20 % sont admis.</p>
+        <ol>
+          <li>Construire un arbre pondéré.</li>
+          <li>Calculer <code>P(D ∩ A)</code>.</li>
+          <li>Montrer que <code>P(A) = 0,24</code>.</li>
+          <li>Probabilité qu'un candidat admis n'ait pas été sélectionné sur dossier ?</li>
+        </ol>
+        <p><strong>Partie 2.</strong> On choisit 7 candidats au hasard (avec remise). <code>X</code> = nombre d'admis.</p>
+        <ol>
+          <li>Paramètres de la loi de <code>X</code> ?</li>
+          <li>Calculer <code>P(X = 1)</code> (au centième).</li>
+          <li>Calculer <code>P(X ≥ 2)</code>.</li>
+          <li>À partir de quelle valeur de <code>n</code> la probabilité qu'au moins un élève du lycée soit admis est-elle ≥ 0,99 ?</li>
+        </ol>
+        <button class="corr-toggle-btn" onclick="toggleCorr('corr31')">Voir la correction</button>
+        <div class="correction" id="corr31">
+          <span class="corr-label">Correction</span>
+          <p><strong>Partie 1 :</strong></p>
+          <ol>
+            <li>Arbre avec nœuds D (p=0,1) et D̄ (p=0,9), puis A|D (0,6), A|D̄ (0,2).</li>
+            <li><code>P(D ∩ A) = 0,1 × 0,6 = 0,06</code></li>
+            <li><code>P(A) = P(D∩A) + P(D̄∩A) = 0,06 + 0,9×0,2 = 0,06 + 0,18 = 0,24</code> ✓</li>
+            <li><code>P<sub>A</sub>(D̄) = P(D̄∩A)/P(A) = 0,18/0,24 = 0,75</code></li>
+          </ol>
+          <p><strong>Partie 2 :</strong></p>
+          <ol>
+            <li><code>X ∼ B(7 ; 0,24)</code></li>
+            <li><code>P(X=1) = C(7,1)×0,24¹×0,76⁶ ≈ 0,32</code></li>
+            <li><code>P(X≥2) = 1 − P(X≤1) = 1 − 0,47 = 0,53</code></li>
+            <li>On veut <code>0,76ⁿ ≤ 0,01</code>, soit <code>n ≥ ln(0,01)/ln(0,76) ≈ 16,8</code> → <strong>n ≥ 17</strong></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CHAPITRE 4 — FONCTIONS
+══════════════════════════════════ -->
+<section class="chapter" id="ch4">
+  <div class="chapter-header">
+    <div class="chapter-title-group">
+      <span class="chapter-tag tag-fonc">Chapitre 4</span>
+      <h2>Fonctions — Limites, dérivée, convexité</h2>
+    </div>
+    <button class="chapter-done-btn" id="btn-ch4" onclick="toggleChapter('ch4')">
+      <span class="btn-icon">○</span> Marquer fait
+    </button>
+  </div>
+
+  <div class="section">
+    <h3>4.1 Limites de fonctions</h3>
+    <div class="formula-grid">
+      <div class="f-item"><span class="fn">Croissances comparées</span><span class="fv">lim xⁿ/eˣ = 0 (x→+∞)</span></div>
+      <div class="f-item"><span class="fn">Croissances comparées</span><span class="fv">lim ln(x)/x = 0 (x→+∞)</span></div>
+      <div class="f-item"><span class="fn">ln en 0⁺</span><span class="fv">lim x·ln(x) = 0 (x→0⁺)</span></div>
+      <div class="f-item"><span class="fn">ln(1+x)/x</span><span class="fv">lim = 1 (x→0)</span></div>
+    </div>
+    <div class="warn-box">
+      <span class="box-label">⚠ Formes indéterminées</span>
+      <strong>+∞ − ∞</strong>, <strong>0×∞</strong>, <strong>∞/∞</strong>, <strong>0/0</strong> : on ne peut pas conclure directement. Il faut factoriser, utiliser les conjugués, ou les croissances comparées.
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>4.2 Continuité et TVI</h3>
+    <div class="thm-box">
+      <span class="box-label">Théorème des valeurs intermédiaires</span>
+      Si <code>f</code> est continue sur <code>[a, b]</code> et si <code>k</code> est entre <code>f(a)</code> et <code>f(b)</code>, il existe <code>c ∈ [a, b]</code> tel que <code>f(c) = k</code>.<br>
+      Si de plus <code>f</code> est <strong>strictement monotone</strong>, ce <code>c</code> est unique.
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>4.3 Dérivée — Règles et formules</h3>
+    <table>
+      <thead><tr><th>f(x)</th><th>f'(x)</th><th>Domaine</th></tr></thead>
+      <tbody>
+        <tr><td>xⁿ</td><td>nxⁿ⁻¹</td><td>ℝ</td></tr>
+        <tr><td>eˣ</td><td>eˣ</td><td>ℝ</td></tr>
+        <tr><td>ln x</td><td>1/x</td><td>]0,+∞[</td></tr>
+        <tr><td>√x</td><td>1/(2√x)</td><td>]0,+∞[</td></tr>
+        <tr><td>eᵘ</td><td>u'·eᵘ</td><td></td></tr>
+        <tr><td>ln u</td><td>u'/u</td><td></td></tr>
+        <tr><td>uⁿ</td><td>n·u'·uⁿ⁻¹</td><td></td></tr>
+        <tr><td>u/v</td><td>(u'v−uv')/v²</td><td>v≠0</td></tr>
+      </tbody>
+    </table>
+    <p>Équation de la tangente en <code>x = a</code> : <code>y = f'(a)(x − a) + f(a)</code></p>
+  </div>
+
+  <div class="section">
+    <h3>4.4 Convexité</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      Une fonction est <strong>convexe</strong> si sa courbe est au-dessus de ses tangentes (forme ∪). Elle est <strong>concave</strong> si elle est en dessous (forme ∩).
+    </div>
+    <div class="thm-box">
+      <span class="box-label">Critère de la dérivée seconde</span>
+      • <code>f''(x) > 0</code> sur <code>I</code> ⟹ <code>f</code> convexe sur <code>I</code><br>
+      • <code>f''(x) < 0</code> sur <code>I</code> ⟹ <code>f</code> concave sur <code>I</code><br>
+      • Un point où <code>f''</code> change de signe est un <strong>point d'inflexion</strong>.
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>4.5 Logarithme naturel</h3>
+    <div class="formula-grid">
+      <div class="f-item"><span class="fn">Propriété</span><span class="fv">ln(ab) = ln a + ln b</span></div>
+      <div class="f-item"><span class="fn">Propriété</span><span class="fv">ln(a/b) = ln a − ln b</span></div>
+      <div class="f-item"><span class="fn">Propriété</span><span class="fv">ln(aⁿ) = n·ln a</span></div>
+      <div class="f-item"><span class="fn">Valeurs</span><span class="fv">ln 1 = 0 ; ln e = 1</span></div>
+      <div class="f-item"><span class="fn">Limite en 0⁺</span><span class="fv">−∞</span></div>
+      <div class="f-item"><span class="fn">Limite en +∞</span><span class="fv">+∞ (croît moins vite que x)</span></div>
+    </div>
+  </div>
+
+  <!-- Exo 4.1 -->
+  <div class="section">
+    <h3>Exercice type bac</h3>
+    <div class="exo-block">
+      <div class="exo-header" onclick="toggleExo('exo41')">
+        <div>
+          <div class="exo-title">Exercice 4.1 — Fonction f(x) = (a + b ln x)/x, point d'inflexion</div>
+          <div class="exo-tags"><span class="exo-tag">ln</span><span class="exo-tag">dérivée</span><span class="exo-tag">point d'inflexion</span></div>
+        </div>
+        <span class="exo-toggle" id="toggle-exo41">▼ Voir</span>
+      </div>
+      <div class="exo-body" id="body-exo41">
+        <p>On considère <code>f(x) = (a + b ln x)/x</code> sur <code>]0, +∞[</code>. La courbe admet une tangente horizontale au point <code>A(1 ; 4)</code>.</p>
+        <ol>
+          <li>Préciser <code>f(1)</code> et <code>f'(1)</code> par lecture graphique.</li>
+          <li>Montrer que <code>f'(x) = (b − a − b ln x)/x²</code>.</li>
+          <li>En déduire <code>a</code> et <code>b</code>. On admet ensuite <code>f(x) = (4 + 4 ln x)/x</code>.</li>
+          <li>Déterminer les limites en 0 et en +∞.</li>
+          <li>Dresser le tableau de variations.</li>
+          <li>Montrer que <code>f''(x) = (−4 + 8 ln x)/x³</code>.</li>
+          <li>Montrer que la courbe a un unique point d'inflexion et donner ses coordonnées.</li>
+        </ol>
+        <button class="corr-toggle-btn" onclick="toggleCorr('corr41')">Voir la correction</button>
+        <div class="correction" id="corr41">
+          <span class="corr-label">Correction</span>
+          <ol>
+            <li><code>f(1) = 4</code> (lecture) ; tangente horizontale → <code>f'(1) = 0</code>.</li>
+            <li>Dérivée d'un quotient : <code>f'(x) = [(b/x)·x − (a+b ln x)·1]/x² = (b−a−b ln x)/x²</code> ✓</li>
+            <li><code>f(1) = a = 4</code> ; <code>f'(1) = b−a = 0</code> → <code>b = 4</code>.</li>
+            <li>Limite en 0⁺ : <code>4+4 ln x → −∞</code> et <code>1/x → +∞</code> → <code>f(x) → −∞</code>. Limite en +∞ : par croissances comparées, <code>f(x) → 0</code>.</li>
+            <li><code>f'(x) = −4 ln x / x²</code>. Signe de <code>f'</code> = signe de <code>−ln x</code>. Croissante sur ]0;1], décroissante sur [1;+∞[. Max en <code>x=1</code> : <code>f(1)=4</code>.</li>
+            <li><code>f''(x) = [−(4/x)·x² − 2x·(−4 ln x)]/x⁴ = (−4x+8x ln x)/x⁴ = (−4+8 ln x)/x³</code> ✓</li>
+            <li><code>f''(x)=0 ⟺ ln x = 1/2 ⟺ x = √e</code>. <code>f''</code> change de signe → point d'inflexion en <code>(√e , 6/√e)</code> soit <code>(e^(1/2), 6e^(−1/2))</code>.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CHAPITRE 5 — PRIMITIVES
+══════════════════════════════════ -->
+<section class="chapter" id="ch5">
+  <div class="chapter-header">
+    <div class="chapter-title-group">
+      <span class="chapter-tag tag-prim">Chapitre 5</span>
+      <h2>Primitives & Intégration</h2>
+    </div>
+    <button class="chapter-done-btn" id="btn-ch5" onclick="toggleChapter('ch5')">
+      <span class="btn-icon">○</span> Marquer fait
+    </button>
+  </div>
+
+  <div class="section">
+    <h3>5.1 Primitive d'une fonction</h3>
+    <div class="def-box">
+      <span class="box-label">Définition</span>
+      <code>F</code> est une primitive de <code>f</code> sur <code>I</code> si <code>F'(x) = f(x)</code> pour tout <code>x ∈ I</code>. Toutes les primitives diffèrent d'une constante.
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>5.2 Primitives des fonctions de référence</h3>
+    <table>
+      <thead><tr><th>f(x)</th><th>Primitive F(x)</th></tr></thead>
+      <tbody>
+        <tr><td>xⁿ (n ≠ −1)</td><td>xⁿ⁺¹/(n+1) + C</td></tr>
+        <tr><td>1/x</td><td>ln|x| + C</td></tr>
+        <tr><td>eˣ</td><td>eˣ + C</td></tr>
+        <tr><td>e^(ax)</td><td>(1/a)e^(ax) + C</td></tr>
+        <tr><td>sin x</td><td>−cos x + C</td></tr>
+        <tr><td>cos x</td><td>sin x + C</td></tr>
+        <tr><td>1/√x</td><td>2√x + C</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h3>5.3 Primitives de fonctions composées</h3>
+    <div class="formula-grid">
+      <div class="f-item"><span class="fn">u'·eᵘ</span><span class="fv">eᵘ + C</span></div>
+      <div class="f-item"><span class="fn">u'/u</span><span class="fv">ln|u| + C</span></div>
+      <div class="f-item"><span class="fn">u'·uⁿ (n≠−1)</span><span class="fv">uⁿ⁺¹/(n+1) + C</span></div>
+      <div class="f-item"><span class="fn">u'/(2√u)</span><span class="fv">√u + C</span></div>
+    </div>
+
+    <div class="thm-box">
+      <span class="box-label">Théorème fondamental du calcul intégral</span>
+      Si <code>F</code> est une primitive de <code>f</code> sur <code>[a, b]</code> :
+      <div class="formula">∫ₐᵇ f(x) dx = [F(x)]ₐᵇ = F(b) − F(a)</div>
+    </div>
+
+    <div class="prop-box">
+      <span class="box-label">Intégration par parties (IPP)</span>
+      <div class="formula">∫ₐᵇ u'(x)·v(x) dx = [u(x)v(x)]ₐᵇ − ∫ₐᵇ u(x)·v'(x) dx</div>
+    </div>
+
+    <div class="ex-box">
+      <span class="box-label">Exemple — ∫ x·eˣ dx</span>
+      On pose <code>v = x</code> (→ <code>v' = 1</code>) et <code>u' = eˣ</code> (→ <code>u = eˣ</code>).<br>
+      <code>∫ x·eˣ dx = x·eˣ − ∫ eˣ dx = eˣ(x − 1) + C</code>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     RESSOURCES & LIENS
+══════════════════════════════════ -->
+<section id="ressources">
+  <div class="section-title">Ressources & Liens</div>
+
+  <div class="res-grid">
+    <a class="res-card" href="https://eduscol.education.gouv.fr/5199/annales-des-epreuves-du-baccalaureat-des-voies-generale-et-technologique" target="_blank">
+      <span class="r-type">Officiel · Sujets</span>
+      <div class="r-title">Annales officielles — Min. Éducation</div>
+      <div class="r-desc">Sujets de bac depuis 2013, téléchargeables gratuitement.</div>
+      <span class="r-url">eduscol.education.gouv.fr</span>
+    </a>
+    <a class="res-card" href="https://www.sujetdebac.fr/annales/specialites/spe-mathematiques//" target="_blank">
+      <span class="r-type">Annales · Corrigés</span>
+      <div class="r-title">SujetDeBac.fr</div>
+      <div class="r-desc">Sujets et corrigés par thème et par année.</div>
+      <span class="r-url">sujetdebac.fr</span>
+    </a>
+    <a class="res-card" href="https://www.youtube.com/@YMONKA" target="_blank">
+      <span class="r-type">Vidéos</span>
+      <div class="r-title">Yvan Monka</div>
+      <div class="r-desc">Cours vidéo complets de terminale, très bien expliqués.</div>
+      <span class="r-url">youtube.com/@Yvan_Monka</span>
+    </a>
+    <a class="res-card" href="https://www.geogebra.org" target="_blank">
+      <span class="r-type">Outil</span>
+      <div class="r-title">GeoGebra</div>
+      <div class="r-desc">Visualiser courbes, dérivées, intégrales, géométrie 3D.</div>
+      <span class="r-url">geogebra.org</span>
+    </a>
+    <a class="res-card" href="https://www.maths-et-tiques.fr/index.php/outils-pour-le-prof/emulateurs-calculatrices" target="_blank">
+      <span class="r-type">Outils</span>
+      <div class="r-title">Calculatrice virtuel</div>
+      <div class="r-desc">Toutes les calculatrices virtuels</div>
+      <span class="r-url">maths-et-tiques.fr</span>
+    </a>
+    <a class="res-card" href="14-jours.pdf" target="_blank">
+      <span class="r-type">exercices supreme</span>
+      <div class="r-title">14 jours pour réviser le bac</div>
+      <div class="r-desc">PDF qui reprend tout le site, avec des sujets de bac complets, des exercices, les cours...</div>
+      <span class="r-url">spe-maths.fr</span>
+    </a>
+  </div>
+
+  <!-- Liens personnalisés -->
+  <div class="section-title" style="margin-top:2rem">Mes liens personnels</div>
+  <div class="res-grid" id="userLinksGrid">
+    <!-- injecté par JS -->
+  </div>
+  <div id="noLinks" style="font-family:var(--sans);font-size:0.85rem;color:var(--ink3);font-style:italic;margin-bottom:1rem;display:none;">Aucun lien ajouté pour l'instant.</div>
+
+  <!-- Formulaire ajout lien -->
+  <div class="add-link-panel" id="addLinkPanel">
+    <h4>+ Ajouter un lien</h4>
+    <div class="form-row">
+      <input class="form-input" id="linkTitle" type="text" placeholder="Titre (ex: Mes annales corrigées)">
+      <input class="form-input" id="linkType" type="text" placeholder="Catégorie (ex: PDF, Vidéo...)">
+    </div>
+    <div class="form-row single">
+      <input class="form-input" id="linkUrl" type="url" placeholder="URL (https://...)">
+    </div>
+    <div class="form-row single">
+      <input class="form-input" id="linkDesc" type="text" placeholder="Description courte (optionnel)">
+    </div>
+    <button class="btn-add" onclick="addLink()">Ajouter</button>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════
+     MODAL PLANNING
+═══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <h3 id="modalTitle"></h3>
+    <div class="modal-exos" id="modalExos"></div>
+    <div class="modal-actions">
+      <button class="btn-mark-done btn-cancel" onclick="closeModalBtn()">Annuler</button>
+      <button class="btn-mark-done" id="modalActionBtn" onclick="modalToggleDay()"></button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+/* ──────────────────────────────────────
+   DATA — 14 jours de planning
+────────────────────────────────────── */
+const days = [
+  { id:1,  exos: ["Ex 1.1 — Suite récurrente, récurrence, limite", "Ex 2.1 — Droites coplanaires, équation paramétrique", "Ex 3.1 — Arbre, probabilité conditionnelle, loi binomiale"] },
+  { id:2,  exos: ["Ex 4.1 — Logarithme, dérivation, point d'inflexion", "Ex 6.1 — Python"] },
+  { id:3,  exos: ["Ex 1.2 — Convergence monotone, gendarmes, algorithme", "Ex 2.2 — Équation cartésienne, représentation paramétrique", "Ex 3.2 — Loi binomiale, probabilité conditionnelle, arbre"] },
+  { id:4,  exos: ["Ex 4.2 — Fonction exponentielle, limites, tableaux de variations, TVI", "Ex 6.2 — Python"] },
+  { id:5,  exos: ["Ex 1.3 — Récurrence, suite géométrique, convergence monotone", "Ex 2.3 — Équation plan, droite paramétrique, projeté orthogonal", "Ex 3.3 — Variable aléatoire, loi de probabilité, espérance, loi binomiale"] },
+  { id:6,  exos: ["Ex 4.3 — Fonction exponentielle, variations, tangente", "Ex 6.3 — Python"] },
+  { id:7,  exos: ["Ex 1.4 — Suite géométrique, récurrence, sens de variation", "Ex 2.4 — Équation plan, droite paramétrique", "Ex 3.4 — Combinaison, variable aléatoire, loi binomiale"] },
+  { id:8,  exos: ["Ex 4.4 — Fonction exponentielle, dérivée, coefficient directeur", "Ex 6.4 — Python"] },
+  { id:9,  exos: ["Ex 1.5 — Suite récurrente, Python, suite géométrique et limite", "Ex 2.5 — Produit scalaire, équation plan, projeté orthogonal, distance", "Ex 3.5 — Arbre de probabilité conditionnelle, loi binomiale"] },
+  { id:10, exos: ["Ex 4.5 — Fonction exponentielle, sens de variation, tangente", "Ex 5.1 — Droites coplanaires, équation cartésienne"] },
+  { id:11, exos: ["Ex 1.6 — Suite récurrente, Python, suite géométrique auxiliaire, récurrence", "Ex 2.6 — Produit scalaire, système paramétrique, équation plan, projeté orthogonal", "Ex 3.6 — Arbre, espérance, loi binomiale"] },
+  { id:12, exos: ["Ex 4.6 — Logarithme, limites, tableau de variations, convexité", "Ex 5.2 — Primitives"] },
+  { id:13, exos: ["Ex 1.7 — Suite récurrente, tableur, suite géométrique", "Ex 2.7 — Équation plan, représentation paramétrique, angle", "Ex 3.7 — Arbre, probabilité conditionnelle, loi binomiale"] },
+  { id:14, exos: ["Ex 4.7 — Logarithme, dérivation, tableaux de variations, points d'inflexion", "Ex 6.5 — Primitives"] },
+];
+
+const CHAPTERS = ['ch1','ch2','ch3','ch4','ch5'];
+
+/* ──────────────────────────────────────
+   STATE (localStorage)
+────────────────────────────────────── */
+function loadState() {
+  return {
+    daysChecked: JSON.parse(localStorage.getItem('bac_days') || '{}'),
+    chaptersChecked: JSON.parse(localStorage.getItem('bac_chapters') || '{}'),
+    userLinks: JSON.parse(localStorage.getItem('bac_links') || '[]'),
+  };
+}
+
+function saveState(state) {
+  localStorage.setItem('bac_days', JSON.stringify(state.daysChecked));
+  localStorage.setItem('bac_chapters', JSON.stringify(state.chaptersChecked));
+  localStorage.setItem('bac_links', JSON.stringify(state.userLinks));
+}
+
+let state = loadState();
+
+/* ──────────────────────────────────────
+   PLANNING GRID
+────────────────────────────────────── */
+function renderDays() {
+  const grid = document.getElementById('daysGrid');
+  grid.innerHTML = '';
+  days.forEach(day => {
+    const done = !!state.daysChecked[day.id];
+    const card = document.createElement('div');
+    card.className = 'day-card' + (done ? ' done' : '');
+    card.onclick = () => openModal(day.id);
+    card.innerHTML = `
+      <div class="day-header">
+        <span class="day-number">JOUR N°${day.id}</span>
+        <div class="day-checkbox" id="daycheck-${day.id}"></div>
+      </div>
+      <div class="day-exos">${day.exos.map(e => `<span>${e.split('—')[0].trim()}</span>`).join('')}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ──────────────────────────────────────
+   MODAL
+────────────────────────────────────── */
+let currentModalDay = null;
+
+function openModal(dayId) {
+  currentModalDay = dayId;
+  const day = days.find(d => d.id === dayId);
+  const done = !!state.daysChecked[dayId];
+  document.getElementById('modalTitle').textContent = `Jour n°${dayId}`;
+  document.getElementById('modalExos').innerHTML = day.exos.map(e => `• ${e}<br>`).join('');
+  const btn = document.getElementById('modalActionBtn');
+  if (done) {
+    btn.textContent = 'Marquer non fait';
+    btn.className = 'btn-mark-done unmark';
+  } else {
+    btn.textContent = 'Marquer comme fait ✓';
+    btn.className = 'btn-mark-done mark';
+  }
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  currentModalDay = null;
+}
+
+function modalToggleDay() {
+  if (!currentModalDay) return;
+  const done = !!state.daysChecked[currentModalDay];
+  if (done) {
+    delete state.daysChecked[currentModalDay];
+    showToast(`Jour n°${currentModalDay} retiré`);
+  } else {
+    state.daysChecked[currentModalDay] = true;
+    showToast(`Jour n°${currentModalDay} terminé ! 🎉`);
+  }
+  saveState(state);
+  renderDays();
+  closeModalBtn();
+}
+
+/* ──────────────────────────────────────
+   CHAPTERS
+────────────────────────────────────── */
+function toggleChapter(chId) {
+  const done = !!state.chaptersChecked[chId];
+  if (done) {
+    delete state.chaptersChecked[chId];
+    showToast('Chapitre retiré');
+  } else {
+    state.chaptersChecked[chId] = true;
+    showToast('Chapitre terminé ! ✓');
+  }
+  saveState(state);
+  renderChapters();
+  renderProgress();
+}
+
+function renderChapters() {
+  CHAPTERS.forEach(chId => {
+    const done = !!state.chaptersChecked[chId];
+    const btn = document.getElementById('btn-' + chId);
+    const nav = document.getElementById('nav-' + chId);
+    const check = document.getElementById('check-' + chId);
+    if (btn) {
+      btn.classList.toggle('done', done);
+      btn.querySelector('.btn-icon').textContent = done ? '✓' : '○';
+      btn.childNodes[btn.childNodes.length-1].textContent = done ? ' Fait ✓' : ' Marquer fait';
+    }
+    if (nav) nav.classList.toggle('done', done);
+  });
+}
+
+function renderProgress() {
+  const done = CHAPTERS.filter(c => !!state.chaptersChecked[c]).length;
+  const total = CHAPTERS.length;
+  document.getElementById('progressText').textContent = `${done} / ${total} chapitres`;
+  document.getElementById('progressFill').style.width = `${(done/total)*100}%`;
+}
+
+/* ──────────────────────────────────────
+   USER LINKS
+────────────────────────────────────── */
+function renderUserLinks() {
+  const grid = document.getElementById('userLinksGrid');
+  const noLinks = document.getElementById('noLinks');
+  grid.innerHTML = '';
+  if (state.userLinks.length === 0) {
+    noLinks.style.display = 'block';
+    return;
+  }
+  noLinks.style.display = 'none';
+  state.userLinks.forEach((link, i) => {
+    const card = document.createElement('a');
+    card.className = 'res-card user-res-card';
+    card.href = link.url;
+    card.target = '_blank';
+    card.style.display = 'flex';
+    card.innerHTML = `
+      <div style="flex:1">
+        <span class="r-type">${escHtml(link.type) || 'Lien perso'}</span>
+        <div class="r-title">${escHtml(link.title)}</div>
+        <div class="r-desc">${escHtml(link.desc)}</div>
+        <span class="r-url">${escHtml(link.url)}</span>
+      </div>
+      <button class="del-btn" onclick="deleteLink(event, ${i})" title="Supprimer">✕</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function addLink() {
+  const title = document.getElementById('linkTitle').value.trim();
+  const url   = document.getElementById('linkUrl').value.trim();
+  const type  = document.getElementById('linkType').value.trim();
+  const desc  = document.getElementById('linkDesc').value.trim();
+  if (!title || !url) { showToast('⚠ Titre et URL requis'); return; }
+  if (!url.startsWith('http')) { showToast('⚠ URL invalide (commencer par https://)'); return; }
+  state.userLinks.push({ title, url, type, desc });
+  saveState(state);
+  renderUserLinks();
+  document.getElementById('linkTitle').value = '';
+  document.getElementById('linkUrl').value = '';
+  document.getElementById('linkType').value = '';
+  document.getElementById('linkDesc').value = '';
+  showToast('Lien ajouté !');
+}
+
+function deleteLink(e, i) {
+  e.preventDefault();
+  e.stopPropagation();
+  state.userLinks.splice(i, 1);
+  saveState(state);
+  renderUserLinks();
+  showToast('Lien supprimé');
+}
+
+/* ──────────────────────────────────────
+   EXERCICES ACCORDION
+────────────────────────────────────── */
+function toggleExo(id) {
+  const body = document.getElementById('body-' + id);
+  const toggle = document.getElementById('toggle-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.textContent = isOpen ? '▼ Voir' : '▲ Fermer';
+}
+
+function toggleCorr(id) {
+  const corr = document.getElementById(id);
+  corr.classList.toggle('open');
+  const btn = corr.previousElementSibling;
+  btn.textContent = corr.classList.contains('open') ? 'Masquer la correction' : 'Voir la correction';
+}
+
+/* ──────────────────────────────────────
+   NAV
+────────────────────────────────────── */
+function goTo(id) {
+  const el = document.getElementById(id);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  closeMobileMenu();
+}
+
+function scrollToLinks() {
+  document.getElementById('ressources').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => document.getElementById('addLinkPanel').scrollIntoView({ behavior: 'smooth' }), 300);
+  closeMobileMenu();
+}
+
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+}
+
+function closeMobileMenu() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+}
+
+/* ──────────────────────────────────────
+   TOAST
+────────────────────────────────────── */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ──────────────────────────────────────
+   ACTIVE NAV on scroll
+────────────────────────────────────── */
+const allSections = ['ch1','ch2','ch3','ch4','ch5','ressources'];
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 120;
+  let current = '';
+  allSections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) current = id;
+  });
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.remove('active');
+  });
+  if (current) {
+    const navBtn = document.getElementById('nav-' + current);
+    if (navBtn) navBtn.classList.add('active');
+  }
+}, { passive: true });
+
+/* ──────────────────────────────────────
+   INIT
+────────────────────────────────────── */
+renderDays();
+renderChapters();
+renderProgress();
+renderUserLinks();
+</script>
+</body>
+</html>
